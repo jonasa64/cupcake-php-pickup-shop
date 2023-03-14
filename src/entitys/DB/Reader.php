@@ -1,5 +1,6 @@
 <?php
 
-class Reader
+class Reader extends DB
 {
+    public static $PDO = null;
 }
