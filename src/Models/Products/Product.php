@@ -1,5 +1,7 @@
 <?php
 
+namespace Cupcake\Models\Products;
+
 class Product
 {
 
