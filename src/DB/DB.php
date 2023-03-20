@@ -1,5 +1,7 @@
 <?php
 
+namespace Cupcake\DB;
+
 class DB
 {
 
@@ -19,7 +21,7 @@ class DB
     {
         try {
             if (static::$PDO == null) {
-                static::$PDO = new PDO('mysql:host=' . self::$dbHost . ';dbname=' . self::$dbName, self::$dbUser, self::$dbPass);
+                static::$PDO = new \PDO('mysql:host=' . self::$dbHost . ';dbname=' . self::$dbName, self::$dbUser, self::$dbPass);
                 static::$PDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             }
         } catch (\PDOException $e) {

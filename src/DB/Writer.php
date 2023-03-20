@@ -1,5 +1,7 @@
 <?php
 
+namespace Cupcake\DB;
+
 class Writer extends DB
 {
     public static $PDO = null;
@@ -30,7 +32,7 @@ class Writer extends DB
 
         return static::getLastInsertedId();
     }
-    public static function update(string $tableName, array $data, string $whereSQL, array $whereValues = [])
+    public static function update(string $tableName, array $data, string $whereSQL, array $whereValues = []): bool
     {
 
         foreach ($whereValues as $name => $value) {
@@ -54,10 +56,13 @@ class Writer extends DB
 
         $query = static::prepare($sql);
         $query->execute($values);
+        $rowCount =  $query->rowCount();
         $query = null;
+
+        return $rowCount > 0;
     }
 
-    public static function delete(string $tableName, string $whereSQL, array $whereValues = []): void
+    public static function delete(string $tableName, string $whereSQL, array $whereValues = []): bool
     {
         foreach ($whereValues as $name => $value) {
             if (is_array($value)) {
@@ -69,6 +74,8 @@ class Writer extends DB
         $sql = sprintf("DELETE FROM %s WHERE %S", $tableName, $whereSQL);
         $query = static::prepare($sql);
         $query->execute($whereValues);
+        $rowCount = $query->rowCount();
         $query = null;
+        return $rowCount > 0;
     }
 }
