@@ -1,5 +1,11 @@
 {
     "require": {
         "stripe/stripe-php": "^10.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "cupCake\\Controllers\\": "src/Controllers",
+            "cupCake\\Models\\" : "src/Models"
+        }
     }
 }
