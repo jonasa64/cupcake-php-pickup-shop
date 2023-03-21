@@ -4,8 +4,13 @@
     },
     "autoload": {
         "psr-4": {
-            "cupCake\\Controllers\\": "src/Controllers",
-            "cupCake\\Models\\" : "src/Models"
-        }
+            "Cupcake\\Controllers\\": "src/Controllers",
+            "Cupcake\\Models\\" : "src/Models",
+            "Cupcake\\": "src" 
+        },
+        "classmap": [
+            "src/"
+        ]
+    
     }
 }
