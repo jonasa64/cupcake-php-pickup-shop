@@ -20,6 +20,7 @@ class DB
     public static function connect()
     {
         try {
+            // Check if connected
             if (static::$PDO == null) {
                 static::$PDO = new \PDO('mysql:host=' . self::$dbHost . ';dbname=' . self::$dbName, self::$dbUser, self::$dbPass);
                 static::$PDO->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -45,7 +46,7 @@ class DB
         return static::$PDO->prepare($query);
     }
 
-    public static function exac(string $query): int|false
+    public static function exec(string $query): int|false
     {
         static::connect();
         return static::$PDO->exec($query);
@@ -62,11 +63,13 @@ class DB
     {
         $newPlaceholders = [];
 
+        // Loop through array to create new placeholders & new named parameters
         for ($i = 1; $i <= count($array); $i++) {
             $newPlaceholders[] = ":" . $placeholderName . $i;
             $SQLValues[":" . $placeholderName . $i] = $array[$i - 1];
         }
 
+        // Replace ol placeholder with multiple new list
         $SQLWhere = str_replace(":" . $placeholderName, implode(", ", $newPlaceholders), $SQLValues);
     }
 }
