@@ -35,7 +35,7 @@ class Writer extends DB
 
         return static::getLastInsertedId();
     }
-    public static function update(string $tableName, array $data, string $whereSQL, array $whereValues = []): bool
+    public static function update(string $tableName, array $data, string $whereSQL, array $whereValues = [])
     {
 
         // CHeck for arrays in WHERE values that should be split and bind into multiple parameters
@@ -62,13 +62,10 @@ class Writer extends DB
         // Execute update
         $query = static::prepare($sql);
         $query->execute($values);
-        $rowCount =  $query->rowCount();
         $query = null;
-
-        return $rowCount > 0;
     }
 
-    public static function delete(string $tableName, string $whereSQL, array $whereValues = []): bool
+    public static function delete(string $tableName, string $whereSQL, array $whereValues = [])
     {
         // Check for arrays in WHERE values that should be split and bind into multiple parameters
         foreach ($whereValues as $name => $value) {
@@ -82,8 +79,6 @@ class Writer extends DB
         // Execute DELETE
         $query = static::prepare($sql);
         $query->execute($whereValues);
-        $rowCount = $query->rowCount();
         $query = null;
-        return $rowCount > 0;
     }
 }
