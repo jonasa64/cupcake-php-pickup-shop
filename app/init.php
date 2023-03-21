@@ -1,5 +1,5 @@
 <?php
 
-require_once 'Core.php';
+require_once "../src/Controllers/Core.php";
 
-$init = new Core;
+$init = new Cupcake\Controllers\Core;

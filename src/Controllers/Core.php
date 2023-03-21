@@ -1,9 +1,13 @@
 <?php
+
+namespace Cupcake\Controllers;
+
 /*
    * App Core Class
    * Creates URL & loads core controller
    * URL FORMAT - /controller/method/params
    */
+
 class Core
 {
     private $currentController = 'Home';
@@ -16,16 +20,29 @@ class Core
 
         $url = $this->getUrl();
 
+
         // Look in BLL for first value
-        if (file_exists('../src/Controllers/' . ucwords($url[0]) . '/' . ucwords(substr($url[0], 0, -1)) . '.php')) {
+        if (file_exists(dirname(__FILE__) . '/' . ucwords($url[0]) . '/' . ucwords(substr($url[0], 0, -1)) . '.php')) {
+
             // If exists, set as controller
             $this->currentController = ucwords(substr($url[0], 0, -1));
 
             // Require the controller
-            require_once '../src/Controllers/' . ucwords($url[0]) . '/' . $this->currentController . '.php';
+            require_once dirname(__FILE__) . "/" . ucwords($url[0]) . '/' . $this->currentController . '.php';
+
+            $class_name = get_class($this);
+
+            $reflection_class = new \ReflectionClass($class_name);
+
+            $namespace = $reflection_class->getNamespaceName();
+
+            $this->currentController = $namespace . '\\' . ucwords($url[0]) . "\\"  . $this->currentController;
+
+
 
             // Instantiate controller class
-            $this->currentController = new $this->currentController;
+            $this->currentController = new $this->currentController();
+
             // Unset 0 Index
             unset($url[0]);
         }
