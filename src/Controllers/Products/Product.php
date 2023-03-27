@@ -2,19 +2,25 @@
 
 namespace Cupcake\Controllers\Products;
 
-class Product
+use Cupcake\Controllers\Controller;
+use Cupcake\Models\Products\ProductRepository;
+
+class Product extends Controller
 {
 
     public function index()
     {
-        echo "Hello from product controller";
-        die();
+        $products = ProductRepository::findAll();
+        $this->renderView("Products/index.php", $products);
     }
 
     public function show(int $id)
     {
-        echo "Hello from product controller " . $id;
-        die();
+        $product = ProductRepository::findOne($id);
+        if ($product)
+            $this->renderView("Products/show.php", [$product]);
+        else
+            $this->renderView("Errors/404.php");
     }
 
     public function edit(int $id)
